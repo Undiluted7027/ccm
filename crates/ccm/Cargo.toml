@@ -1,0 +1,17 @@
+[package]
+name = "ccm"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+# Our core logic library
+ccm-core = { path = "../ccm-core" }
+
+# Workspace dependencies
+anyhow.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+
+# Crate-specific dependencies
+clap = { version = "4.5", features = ["derive"] }

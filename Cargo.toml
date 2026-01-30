@@ -1,6 +1,20 @@
-[package]
-name = "ccm"
+[workspace]
+resolver = "2"
+members = [
+    "crates/ccm",
+    "crates/ccm-core",
+    "crates/ccm-test-utils",
+]
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
+authors = ["Sanchit Jain <Undiluted7027@proton.me>"]
+license = "MIT"
 
-[dependencies]
+[workspace.dependencies]
+anyhow = "1.0.100"
+thiserror = "2.0.18"
+toml = "0.9.11"
+serde = { version = "*", features = ["derive"] }
+tokio = { version = "*", features = ["full"] }
