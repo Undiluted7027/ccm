@@ -1,0 +1,9 @@
+# This file pins the Rust toolchain to a specific version.
+# This ensures that all developers and CI/CD systems use the same toolchain,
+# preventing "it works on my machine" issues.
+#
+# The 'nightly' channel is chosen because the project uses `edition = "2024"`,
+# which is a cutting-edge feature.
+[toolchain]
+channel = "nightly"
+components = ["rustfmt", "clippy"]

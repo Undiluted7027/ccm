@@ -1,630 +1,860 @@
-# ccm Roadmap
+# ccm - Complete Roadmap
 
-> The journey to making Claude Code configuration as simple as `fnm use` for Node.js
+> **Vision**: The definitive configuration manager for Claude Code and AI development tools
 
----
-
-## Vision
-
-**ccm** aims to become the standard way developers manage Claude Code configurations, just as fnm became the preferred Node.js version manager by prioritizing speed, simplicity, and developer experience.
-
-### The World We're Building
-
-Imagine a world where:
-
-- **Switching AI providers is instant**: `ccm use openrouter` takes milliseconds, not minutes of JSON editing
-- **Projects declare their AI requirements**: A `.ccmrc` file in your repo ensures everyone uses the right model
-- **Credentials are secure by default**: API keys live in your system keychain, not scattered across dotfiles
-- **Teams share configurations, not secrets**: Export a profile template, let teammates add their own keys
-- **The AI coding experience is provider-agnostic**: Use Claude Code's excellent UX with any compatible backend
-
-### Why This Matters
-
-The AI coding assistant landscape is evolving rapidly:
-- OpenRouter offers 200+ models through one API
-- Local models (Ollama, LMStudio) provide privacy and cost savings
-- Cloud providers (AWS Bedrock, Google Vertex AI) offer enterprise compliance
-- New providers emerge monthly with competitive pricing
-
-Developers shouldn't be locked into one provider. They shouldn't manually edit JSON files. They deserve the same DX for AI configuration that they have for everything else.
+This document outlines ccm's development roadmap from MVP through advanced capabilities. We're building in the open and welcome community input on priorities.
 
 ---
 
-## Current State: The Problem
+## 🗺️ Roadmap Overview
 
-### Today's Claude Code Configuration
-
-```
-~/.claude/
-├── settings.json           # Manual JSON editing 😫
-├── settings.local.json     # More JSON...
-└── .claude.json            # Legacy format still used
-
-Environment variables:
-- ANTHROPIC_API_KEY         # Where does this go?
-- ANTHROPIC_BASE_URL        # In .bashrc? .zshrc? settings.json?
-- ANTHROPIC_MODEL           # Different per project?
-```
-
-### What Developers Resort To
-
-1. **Shell aliases** that break when context changes
-2. **Multiple JSON files** copied between projects  
-3. **Wrapper scripts** like `claudecode-switch` (2 stars, limited features)
-4. **Full alternatives** like OpenCode (loses Claude Code's polish)
-5. **Just giving up** and using one config everywhere
+| Phase | Focus | Timeline | Status |
+|-------|-------|----------|--------|
+| **Phase 1: MVP** | Core functionality | Weeks 1-5 | 🏗️ In Progress |
+| **Phase 2: Polish & Quality of Life** | Essential improvements | Weeks 6-8 | 📋 Planned |
+| **Phase 3: Teams & Sharing** | Collaboration features | Weeks 9-12 | 📋 Planned |
+| **Phase 4: Ecosystem Integration** | Tool integrations | Weeks 13-18 | 🔮 Future |
+| **Phase 5: Enterprise & Scale** | Production features | Weeks 19-26 | 🔮 Future |
+| **Phase 6: Innovation** | Cutting-edge features | Ongoing | 🔮 Future |
 
 ---
 
-## Roadmap Overview
+## Phase 1: MVP ✅ → 🏗️
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                              MVP (v1.0)                                 │
-│                           February 2026                                 │
-├─────────────────────────────────────────────────────────────────────────┤
-│  ✓ Profile management (add, remove, list, use)                         │
-│  ✓ Secure credential storage (keychain + encrypted fallback)           │
-│  ✓ Shell integration (bash, zsh, fish) with auto-switch                │
-│  ✓ Project config (.ccmrc) with directory-based auto-switching         │
-│  ✓ Doctor command for troubleshooting                                  │
-│  ✓ Cross-platform support (macOS, Linux, Windows)                      │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                            v1.1 - Polish                                │
-│                            March 2026                                   │
-├─────────────────────────────────────────────────────────────────────────┤
-│  • Profile templates (quick-start for common providers)                 │
-│  • Connection testing (`ccm test <profile>`)                            │
-│  • Profile inheritance (base + overrides)                               │
-│  • Improved error messages with suggestions                             │
-│  • Shell prompt integration (show current profile)                      │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                           v1.2 - Teams                                  │
-│                            April 2026                                   │
-├─────────────────────────────────────────────────────────────────────────┤
-│  • Profile export/import (shareable configs without secrets)            │
-│  • Organization profile templates (company-wide defaults)               │
-│  • Audit logging (compliance-friendly)                                  │
-│  • Environment variable expansion in profiles                           │
-│  • CI/CD helpers (GitHub Actions, GitLab CI)                            │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                         v2.0 - Ecosystem                                │
-│                            Q3 2026                                      │
-├─────────────────────────────────────────────────────────────────────────┤
-│  • MCP server configuration management                                  │
-│  • Profile registry (community-shared configs)                          │
-│  • VS Code extension (status bar, quick switch)                         │
-│  • Claude Desktop support                                               │
-│  • Cost tracking per profile                                            │
-└─────────────────────────────────────────────────────────────────────────┘
-                                    │
-                                    ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                          Future Vision                                  │
-│                           2026+                                         │
-├─────────────────────────────────────────────────────────────────────────┤
-│  • Smart routing (automatic model selection based on task)              │
-│  • Provider health monitoring (failover when API is down)               │
-│  • Usage analytics dashboard                                            │
-│  • Multi-tool support (Cursor, Windsurf, other AI IDEs)                 │
-│  • Plugin system for custom providers                                   │
-└─────────────────────────────────────────────────────────────────────────┘
-```
+**Timeline**: Weeks 1-5  
+**Status**: In Progress  
+**Goal**: Ship working cross-platform Claude Code configuration manager
+
+See [MVP_ROADMAP.md](./MVP_ROADMAP.md) for detailed breakdown.
+
+### Delivered Features
+- ⏳ Profile management (CRUD, default, current)
+- ⏳ Credential storage (keychain, encrypted file, env var)
+- ⏳ Claude Code settings.json injection
+- ⏳ Shell integration (bash, zsh, fish, PowerShell)
+- ⏳ Project configuration (.ccmrc)
+- ⏳ Diagnostic system (doctor)
+- ⏳ Cross-platform CLI
+
+**Completion Target**: End of Week 5
 
 ---
 
-## MVP (v1.0) — February 2026
+## Phase 2: Polish & Quality of Life
 
-### What We're Building
+**Timeline**: Weeks 6-8 (3 weeks)  
+**Status**: 📋 Planned  
+**Goal**: Refine user experience and add essential convenience features
 
-A fast, reliable, cross-platform CLI that handles the core use case: **switching between Claude Code configurations effortlessly**.
+### 2.1 Profile Templates (Week 6)
 
-### Feature Breakdown
+**Motivation**: Reduce repetitive configuration for common setups
 
-#### 1. Profile Management
+#### Built-in Templates
+- [ ] **`ccm add --template anthropic`**
+  - Pre-configured for Anthropic Claude
+  - Sensible defaults (model, timeout)
+  - Only prompts for API key
+- [ ] **`ccm add --template openrouter`**
+  - OpenRouter configuration
+  - Model selection helper
+- [ ] **`ccm add --template bedrock`**
+  - AWS Bedrock setup
+  - Region configuration
+- [ ] **`ccm add --template vertex`**
+  - Google Vertex AI setup
+  - Project ID configuration
+- [ ] **`ccm add --template ollama`**
+  - Local Ollama setup
+  - No credential required
+  - Default to localhost:11434
 
-**What it does**: Create, store, list, and switch between named configurations.
+#### Custom Templates
+- [ ] **`~/.config/ccm/templates/`** directory
+- [ ] **`ccm template create <name>`**
+- [ ] **`ccm template list`**
+- [ ] **`ccm template show <name>`**
+- [ ] **`ccm template delete <name>`**
 
-**How it works**:
-- Profiles stored as individual TOML files in `~/.config/ccm/profiles/`
-- Each profile defines: provider URL, model, and credential reference
-- One profile can be marked as default
+**Impact**: 80% faster profile creation for common setups
 
-**Commands**:
 ```bash
-ccm add anthropic          # Interactive wizard to create profile
-ccm add local --preset     # Use built-in preset for Ollama
-ccm list                   # Show all profiles with indicators
-ccm use openrouter         # Switch active profile
-ccm current                # Show what's active
-ccm remove old-profile     # Delete a profile
+# Before (interactive, many prompts)
+ccm add
+
+# After (one command, one prompt for API key)
+ccm add work --template anthropic
+# API key: ****
+# Profile 'work' created
 ```
 
-**Why it matters**: Eliminates manual JSON editing for the 90% use case.
+### 2.2 Profile Import/Export (Week 6)
 
-#### 2. Secure Credential Storage
+**Motivation**: Share configurations between machines and team members
 
-**What it does**: Stores API keys securely, never in plain text.
+#### Export Features
+- [ ] **`ccm export <profile> [--output file.toml]`**
+  - Export profile without credentials
+  - Optional credential placeholder
+  - Include template reference
+- [ ] **`ccm export --all [--output profiles.toml]`**
+  - Export all profiles
+  - Bulk transfer support
 
-**How it works**:
-- Primary: System keychain (macOS Keychain, Linux libsecret, Windows Credential Manager)
-- Fallback: AES-256 encrypted file at `~/.config/ccm/.credentials`
-- Profile files only contain references, not actual keys
+#### Import Features
+- [ ] **`ccm import <file.toml>`**
+  - Import single or multiple profiles
+  - Conflict resolution (skip, overwrite, rename)
+  - Credential prompting for imported profiles
+- [ ] **`ccm import --from-env`**
+  - Import from environment variables
+  - `CCM_PROFILE_<NAME>_PROVIDER`, etc.
 
-**Commands**:
+**Impact**: Easy migration between machines, team onboarding
+
 ```bash
-ccm add myprofile          # Prompts for API key, stores securely
-ccm credential set local   # Update credential for existing profile
-ccm credential show local  # Display (masked) credential status
+# Export (no credentials)
+ccm export work > work-profile.toml
+
+# Import on new machine
+ccm import work-profile.toml
+# Credential for 'work': ****
 ```
 
-**Why it matters**: Prevents accidental credential exposure in git commits.
+### 2.3 Connection Testing (Week 7)
 
-#### 3. Shell Integration
+**Motivation**: Verify profiles work before using them
 
-**What it does**: Enables instant switching and automatic per-directory profiles.
+#### Test Features
+- [ ] **`ccm test [profile]`**
+  - Test API connection
+  - Verify credentials
+  - Check model availability
+  - Report latency
+- [ ] **`ccm test --all`**
+  - Test all configured profiles
+  - Summary report
+- [ ] Auto-test on profile creation (optional)
 
-**How it works**:
-- User adds one line to shell config: `eval "$(ccm env --use-on-cd)"`
-- ccm generates shell-specific hooks for cd, prompt, and completions
-- Written in Rust for < 5ms startup impact (following fnm's approach)
+**Impact**: Catch configuration errors early
 
-**Supported shells**:
-- Bash
-- Zsh  
-- Fish
-- PowerShell
-
-**Commands**:
 ```bash
-ccm env --shell bash       # Output bash integration code
-ccm env --use-on-cd        # Include auto-switch hook
-ccm completions bash       # Generate tab completions
+ccm test work
+
+Testing profile 'work'...
+✓ API endpoint reachable (142ms)
+✓ Credentials valid
+✓ Model 'claude-sonnet-4-5-20250514' available
+✓ Connection test passed
+
+ccm test --all
+
+Profile      Status    Latency    Notes
+work         ✓ OK      142ms      
+personal     ✓ OK      138ms      
+ollama-local ✗ FAIL    -          Connection refused (is Ollama running?)
 ```
 
-**Why it matters**: Makes profile switching invisible and automatic.
+### 2.4 Enhanced CLI Experience (Week 7)
 
-#### 4. Project Configuration
+**Motivation**: Delightful command-line experience
 
-**What it does**: Allows projects to declare their required Claude Code configuration.
+#### Tab Completions
+- [ ] **Bash completions** - `ccm completion bash`
+- [ ] **Zsh completions** - `ccm completion zsh`
+- [ ] **Fish completions** - `ccm completion fish`
+- [ ] **PowerShell completions** - `ccm completion powershell`
+- [ ] Profile name completion
+- [ ] Command completion
 
-**How it works**:
-- Projects include a `.ccmrc` file (like `.nvmrc` for Node)
-- Shell hook detects file on `cd` and switches automatically
-- Supports profile name and optional overrides
+#### Rich Output
+- [ ] **Colored output** by default
+- [ ] **`--json`** flag for machine-readable output
+- [ ] **`--quiet`** flag for scripts
+- [ ] **`--no-color`** flag for CI environments
+- [ ] Progress indicators for long operations
+- [ ] Spinner for async operations
 
-**File format** (`.ccmrc`):
+#### Aliases & Shortcuts
+- [ ] **`ccm ls`** → `ccm list`
+- [ ] **`ccm rm`** → `ccm remove`
+- [ ] **`ccm sw`** → `ccm use`
+- [ ] Custom alias support in config
+
+**Impact**: Faster, more pleasant daily usage
+
+### 2.5 Configuration File (Week 8)
+
+**Motivation**: Persistent user preferences
+
+#### Global Configuration
+- [ ] **`~/.config/ccm/config.toml`**
+  ```toml
+  [defaults]
+  shell = "zsh"
+  use_on_cd = true
+  color = true
+  
+  [backup]
+  max_backups = 10
+  auto_backup = true
+  
+  [security]
+  credential_store = "keychain"  # or "encrypted"
+  keychain_timeout = 300  # seconds
+  
+  [output]
+  format = "table"  # or "json"
+  verbose = false
+  
+  [aliases]
+  sw = "use"
+  ls = "list"
+  ```
+- [ ] **`ccm config get <key>`**
+- [ ] **`ccm config set <key> <value>`**
+- [ ] **`ccm config list`**
+- [ ] **`ccm config reset`**
+
+**Impact**: Customizable behavior, persistent preferences
+
+### 2.6 Backup Management (Week 8)
+
+**Motivation**: Recovery from mistakes and auditing
+
+#### Enhanced Backup Features
+- [ ] **`ccm backup list`**
+  - List all backups with timestamps
+  - Show what was backed up
+- [ ] **`ccm backup restore <id>`**
+  - Restore specific backup
+  - Preview before restore
+- [ ] **`ccm backup clean [--older-than 30d]`**
+  - Clean old backups
+  - Configurable retention
+- [ ] **`ccm backup create`**
+  - Manual backup creation
+  - Custom backup name
+
+**Impact**: Peace of mind, easy recovery
+
+---
+
+## Phase 3: Teams & Sharing
+
+**Timeline**: Weeks 9-12 (4 weeks)  
+**Status**: 📋 Planned  
+**Goal**: Enable team collaboration and shared configurations
+
+### 3.1 Profile Bundles (Week 9)
+
+**Motivation**: Share curated sets of profiles
+
+#### Bundle Format
+- [ ] **`.ccm-bundle.toml`** file format
+  ```toml
+  [bundle]
+  name = "acme-corp-profiles"
+  version = "1.0.0"
+  description = "Standard profiles for ACME Corp developers"
+  
+  [[profiles]]
+  name = "acme-prod"
+  provider = "anthropic"
+  model = "claude-sonnet-4-5-20250514"
+  base_url = "https://api.acme.com/claude"
+  # credential_source = prompt on import
+  
+  [[profiles]]
+  name = "acme-dev"
+  provider = "anthropic"
+  model = "claude-haiku-3-5-20241022"
+  ```
+
+#### Bundle Commands
+- [ ] **`ccm bundle create <name>`**
+- [ ] **`ccm bundle add <profile> [--to bundle]`**
+- [ ] **`ccm bundle export <name>`**
+- [ ] **`ccm bundle import <file|url>`**
+- [ ] **`ccm bundle list`**
+
+**Impact**: Standardized team configurations
+
+### 3.2 Remote Profile Sources (Week 10)
+
+**Motivation**: Centralized profile management
+
+#### Git Integration
+- [ ] **`ccm remote add <name> <url>`**
+  - Git repository as profile source
+  - SSH and HTTPS support
+- [ ] **`ccm remote sync [name]`**
+  - Pull latest profiles from remote
+  - Merge with local profiles
+- [ ] **`ccm remote list`**
+- [ ] **`ccm remote remove <name>`**
+
+#### Auto-sync
+- [ ] Optional auto-sync on shell init
+- [ ] Conflict resolution strategies
+- [ ] Offline mode support
+
+**Impact**: Centralized configuration management for teams
+
+```bash
+# Add company profile repository
+ccm remote add company git@github.com:acme/ccm-profiles.git
+
+# Sync profiles
+ccm remote sync company
+# Imported 5 profiles from 'company'
+# - acme-prod (new)
+# - acme-dev (new)
+# - acme-staging (new)
+# - shared-ollama (updated)
+# - experimental (new)
+```
+
+### 3.3 Secrets Management Integration (Week 11)
+
+**Motivation**: Enterprise-grade credential management
+
+#### HashiCorp Vault Integration
+- [ ] **`credential_source = "vault"`**
+  - Vault path configuration
+  - Token/AppRole authentication
+  - Automatic token renewal
+- [ ] **`ccm vault login`**
+- [ ] **`ccm vault status`**
+
+#### 1Password Integration
+- [ ] **`credential_source = "1password"`**
+  - 1Password CLI integration
+  - Item reference syntax
+  - Biometric unlock support
+
+#### AWS Secrets Manager
+- [ ] **`credential_source = "aws-secrets"`**
+  - AWS Secrets Manager integration
+  - IAM role support
+  - Region configuration
+
+**Impact**: Enterprise-compliant credential storage
+
 ```toml
-profile = "local"
-
-[override]
-model = "deepseek-coder:33b"
-timeout_ms = 180000
-```
-
-**Commands**:
-```bash
-ccm init                   # Create .ccmrc in current directory
-ccm init --profile=local   # Create with specific profile
-```
-
-**Why it matters**: Teams can standardize AI configurations per repository.
-
-#### 5. Doctor Command
-
-**What it does**: Diagnoses common issues and guides users to solutions.
-
-**What it checks**:
-1. ccm installation and configuration directory
-2. Claude Code CLI presence and version
-3. Profile validity (required fields, URL format)
-4. Credential accessibility
-5. Shell integration status
-6. Active profile health
-
-**Commands**:
-```bash
-ccm doctor                 # Run all diagnostics
-ccm doctor --fix           # Attempt automatic fixes
-```
-
-**Why it matters**: Reduces support burden, empowers self-service troubleshooting.
-
-#### 6. Cross-Platform Support
-
-**What it does**: Works consistently across macOS, Linux, and Windows.
-
-**How it works**:
-- Single Rust binary with platform-specific keychain backends
-- Path handling uses `dirs` crate for XDG compliance
-- Windows supports both PowerShell and Git Bash
-
-**Distribution**:
-- Install script: `curl -fsSL https://ccm.dev/install | bash`
-- Homebrew: `brew install ccm`
-- Cargo: `cargo install ccm`
-- Scoop: `scoop install ccm`
-- GitHub Releases: Pre-built binaries
-
-**Why it matters**: No one left behind regardless of their development environment.
-
----
-
-## Post-MVP Roadmap
-
-### v1.1 — Polish (March 2026)
-
-#### Profile Templates
-
-**Goal**: Reduce time-to-first-use for common providers.
-
-**Implementation**:
-- Built-in presets for: Anthropic, OpenRouter, Ollama, AWS Bedrock, Google Vertex AI
-- `ccm add myprofile --preset=openrouter` fills in base_url and model suggestions
-- Presets bundled in binary, updated with releases
-
-**User Experience**:
-```bash
-$ ccm add --preset
-? Select a provider template:
-  > Anthropic (Official Claude API)
-    OpenRouter (Multi-model gateway)
-    Ollama (Local models)
-    AWS Bedrock (Enterprise)
-    Custom (Manual configuration)
-```
-
-#### Connection Testing
-
-**Goal**: Validate configurations before use, catch issues early.
-
-**Implementation**:
-- `ccm test <profile>` sends minimal API request to verify credentials
-- Reports latency, model availability, quota status (where supported)
-- Integrated into `ccm add` wizard (optional)
-
-**User Experience**:
-```bash
-$ ccm test openrouter
-Testing openrouter...
-✓ Connection successful (234ms)
-✓ Model claude-sonnet-4 available
-✓ API key valid (expires: never)
-```
-
-#### Profile Inheritance
-
-**Goal**: Enable DRY configurations with shared base settings.
-
-**Implementation**:
-- Profiles can specify `extends = "base-profile"`
-- Child profile inherits all settings, overrides specific fields
-- Useful for team-wide defaults with individual customizations
-
-**Profile format**:
-```toml
+# Profile with Vault credential
 [profile]
-name = "my-openrouter"
-extends = "team-openrouter"
-
-[provider]
-model = "anthropic/claude-opus-4"  # Override model only
+name = "enterprise"
+provider = "anthropic"
+credential_source = { type = "vault", path = "secret/claude/api-key" }
 ```
 
-#### Shell Prompt Integration
+### 3.4 MCP Server Configuration (Week 12)
 
-**Goal**: Always know which profile is active at a glance.
+**Motivation**: Manage MCP servers alongside Claude Code profiles
 
-**Implementation**:
-- `ccm env` exports `CCM_CURRENT_PROFILE` environment variable
-- Provide example prompt configurations for popular themes
-- Document integration with Starship, Oh My Zsh, etc.
+#### MCP Configuration
+- [ ] **`~/.config/ccm/mcp-servers/`** directory
+- [ ] **`ccm mcp add <name>`**
+  - Interactive MCP server setup
+  - Transport configuration (stdio, HTTP)
+- [ ] **`ccm mcp remove <name>`**
+- [ ] **`ccm mcp list`**
+- [ ] **`ccm mcp enable <name> [--profile profile]`**
+- [ ] **`ccm mcp disable <name> [--profile profile]`**
 
-**User Experience**:
+#### Profile MCP Binding
+- [ ] Profiles can specify enabled MCP servers
+- [ ] Auto-configure Claude Code's MCP settings
+- [ ] Per-profile MCP configurations
+
+**Impact**: Complete Claude Code configuration management
+
 ```bash
-~/projects/webapp (main) [ccm:local] $
+# Add an MCP server
+ccm mcp add github
+# Transport: stdio
+# Command: npx -y @modelcontextprotocol/server-github
+# Environment variables:
+#   GITHUB_PERSONAL_ACCESS_TOKEN: ****
+
+# Enable for a profile
+ccm mcp enable github --profile work
+
+# Now 'ccm use work' also configures MCP servers
 ```
 
 ---
 
-### v1.2 — Teams (April 2026)
+## Phase 4: Ecosystem Integration
 
-#### Profile Export/Import
+**Timeline**: Weeks 13-18 (6 weeks)  
+**Status**: 🔮 Future  
+**Goal**: Integrate with developer tools and workflows
 
-**Goal**: Share configurations safely across teams.
+### 4.1 VS Code Extension (Weeks 13-14)
 
-**Implementation**:
-- `ccm export <profile> > team-profile.toml` produces credential-free TOML
-- `ccm import team-profile.toml` creates profile, prompts for credentials
-- Support URL import: `ccm import https://company.com/profiles/default.toml`
+**Motivation**: GUI for users who prefer graphical interfaces
 
-**User Experience**:
+#### Extension Features
+- [ ] Profile switcher in status bar
+- [ ] Profile management sidebar
+- [ ] Credential input dialogs
+- [ ] .ccmrc file support
+- [ ] Auto-detect projects
+- [ ] Command palette integration
+
+**Impact**: Reach VS Code users, improve discoverability
+
+### 4.2 JetBrains Plugin (Week 15)
+
+**Motivation**: Support JetBrains IDE users
+
+#### Plugin Features
+- [ ] Profile switcher in status bar
+- [ ] Settings UI integration
+- [ ] Project-level .ccmrc support
+
+**Impact**: Support for IntelliJ, PyCharm, WebStorm users
+
+### 4.3 Terminal UI (TUI) (Week 16)
+
+**Motivation**: Rich terminal interface for power users
+
+#### TUI Features
+- [ ] **`ccm tui`** command
+- [ ] Interactive profile browser
+- [ ] Credential management
+- [ ] Real-time status
+- [ ] Keyboard shortcuts
+- [ ] Vim-like navigation
+
+**Impact**: Power user productivity
+
+### 4.4 Git Hooks Integration (Week 17)
+
+**Motivation**: Automatic profile switching per repository
+
+#### Hook Features
+- [ ] **`ccm hooks install`**
+  - Install git hooks
+  - post-checkout hook
+  - post-merge hook
+- [ ] **`ccm hooks uninstall`**
+- [ ] Automatic .ccmrc detection on checkout
+
+**Impact**: Seamless project switching in git workflows
+
+### 4.5 CI/CD Templates (Week 18)
+
+**Motivation**: Easy integration with CI/CD pipelines
+
+#### Templates
+- [ ] **GitHub Actions**
+  ```yaml
+  - uses: username/ccm-action@v1
+    with:
+      profile: ci
+      credential: ${{ secrets.ANTHROPIC_API_KEY }}
+  ```
+- [ ] **GitLab CI** template
+- [ ] **CircleCI** orb
+- [ ] **Jenkins** plugin/shared library
+
+**Impact**: CI/CD integration out of the box
+
+---
+
+## Phase 5: Enterprise & Scale
+
+**Timeline**: Weeks 19-26 (8 weeks)  
+**Status**: 🔮 Future  
+**Goal**: Production-ready for enterprise deployments
+
+### 5.1 Usage Analytics & Reporting (Weeks 19-20)
+
+**Motivation**: Visibility into Claude Code usage
+
+#### Analytics Features
+- [ ] **`ccm analytics`** command
+- [ ] Track profile usage (local only, opt-in)
+- [ ] Usage reports by profile
+- [ ] Cost estimation (based on model)
+- [ ] Time-based breakdowns
+
+#### Export Options
+- [ ] JSON export
+- [ ] CSV export
+- [ ] Integration with observability tools
+
+**Impact**: Cost management, usage insights
+
 ```bash
-# Team lead exports
-$ ccm export company-standard > company.toml
-$ git add company.toml
+ccm analytics --last 30d
 
-# New team member imports
-$ ccm import ./company.toml
-Profile 'company-standard' imported
-Enter API key for company-standard: ****
-✓ Profile ready to use
+Profile Usage Report (Last 30 Days)
+───────────────────────────────────
+Profile      Sessions    Est. Cost
+work         142         $23.50
+personal     38          $5.20
+ollama       89          $0.00
+───────────────────────────────────
+Total        269         $28.70
 ```
 
-#### Organization Profile Templates
+### 5.2 Audit Logging (Week 21)
 
-**Goal**: Centralized configuration management for companies.
+**Motivation**: Compliance and security tracking
 
-**Implementation**:
-- Support for loading profiles from network locations
-- `ccm pull <org-url>` syncs organization templates
-- Read-only organization profiles that can't be locally modified
+#### Audit Features
+- [ ] Log all profile switches
+- [ ] Log credential access (not values)
+- [ ] Log configuration changes
+- [ ] Configurable log location
+- [ ] Log rotation
 
-**Configuration** (`~/.config/ccm/config.toml`):
+**Impact**: Enterprise compliance requirements
+
+### 5.3 Policy Engine (Weeks 22-23)
+
+**Motivation**: Enforce organizational policies
+
+#### Policy Features
+- [ ] **`~/.config/ccm/policy.toml`** (or remote)
+  ```toml
+  [policy]
+  allowed_providers = ["anthropic", "ollama"]
+  require_keychain = true
+  max_timeout_ms = 120000
+  allowed_models = ["claude-sonnet-*", "claude-haiku-*"]
+  ```
+- [ ] Policy enforcement on profile creation
+- [ ] Policy warnings on use
+- [ ] Remote policy sources
+
+**Impact**: Organizational control over AI tool usage
+
+### 5.4 SSO & Identity Integration (Weeks 24-25)
+
+**Motivation**: Enterprise identity management
+
+#### SSO Features
+- [ ] OIDC/OAuth2 integration
+- [ ] SAML support
+- [ ] Azure AD integration
+- [ ] Okta integration
+- [ ] Google Workspace integration
+
+**Impact**: Enterprise identity compliance
+
+### 5.5 High Availability & Sync (Week 26)
+
+**Motivation**: Reliable operation at scale
+
+#### HA Features
+- [ ] Distributed configuration store option
+- [ ] etcd/Consul backend
+- [ ] Multi-machine sync
+- [ ] Conflict resolution
+- [ ] Offline mode with sync-on-connect
+
+**Impact**: Enterprise-scale deployments
+
+---
+
+## Phase 6: Innovation
+
+**Timeline**: Ongoing  
+**Status**: 🔮 Future  
+**Goal**: Cutting-edge capabilities
+
+### 6.1 AI-Assisted Configuration
+
+**Motivation**: Intelligent configuration recommendations
+
+#### AI Features
+- [ ] **`ccm suggest`**
+  - Suggest optimal model for task
+  - Recommend timeout settings
+  - Cost optimization suggestions
+- [ ] Natural language profile creation
+  - "Create a profile for my work laptop with Claude Sonnet"
+- [ ] Configuration optimization
+  - Analyze usage patterns
+  - Suggest improvements
+
+**Impact**: Smarter, automated configuration
+
+### 6.2 Profile Composition
+
+**Motivation**: Build complex configurations from simple ones
+
+#### Composition Features
+- [ ] Base profiles with inheritance
+- [ ] Profile mixins
+- [ ] Environment-based overrides
+- [ ] Conditional configuration
+
 ```toml
-[organization]
-template_url = "https://internal.company.com/ccm-profiles/"
-sync_interval = "24h"
-require_approval = true
+# Base profile
+[profile.base]
+provider = "anthropic"
+timeout_ms = 30000
+
+# Derived profile
+[profile.work]
+extends = "base"
+model = "claude-sonnet-4-5-20250514"
 ```
 
-#### Audit Logging
+**Impact**: DRY configuration, easier maintenance
 
-**Goal**: Compliance-friendly tracking of configuration changes.
+### 6.3 Multi-Tool Management
 
-**Implementation**:
-- Append-only log at `~/.config/ccm/audit.log`
-- Records: timestamp, action, profile name, user (for multi-user systems)
-- Optional forwarding to external logging systems
+**Motivation**: Manage configuration for multiple AI tools
 
-**Log format**:
-```json
-{"ts":"2026-04-15T10:23:45Z","action":"use","profile":"production","prev":"development"}
-{"ts":"2026-04-15T10:25:12Z","action":"add","profile":"test-openrouter"}
-```
+#### Multi-Tool Features
+- [ ] Support for other AI coding tools
+  - Cursor
+  - Continue.dev
+  - Cody
+  - GitHub Copilot
+- [ ] Unified credential management
+- [ ] Cross-tool profile sync
 
-#### CI/CD Helpers
+**Impact**: Single source of truth for AI tool configuration
 
-**Goal**: First-class support for automated environments.
+### 6.4 Configuration as Code
 
-**Implementation**:
-- GitHub Action: `anthropic/ccm-action`
-- GitLab CI template
-- Non-interactive mode: `ccm add --non-interactive --auth-token-env=API_KEY`
+**Motivation**: Infrastructure-as-code for AI configurations
 
-**GitHub Action example**:
-```yaml
-- uses: ccm-dev/setup-ccm@v1
-  with:
-    profile: ci-runner
-    auth-token: ${{ secrets.ANTHROPIC_API_KEY }}
-    model: claude-haiku-4
-```
+#### IaC Features
+- [ ] Terraform provider
+- [ ] Pulumi provider
+- [ ] Ansible module
+- [ ] Declarative configuration
+
+**Impact**: DevOps integration, reproducible setups
+
+### 6.5 Workspace Federation
+
+**Motivation**: Large organization support
+
+#### Federation Features
+- [ ] Multiple config namespaces
+- [ ] Hierarchical configuration
+- [ ] Delegation of administration
+- [ ] Workspace isolation
+
+**Impact**: Large enterprise support
 
 ---
 
-### v2.0 — Ecosystem (Q3 2026)
+## 🎯 Feature Prioritization
 
-#### MCP Server Configuration Management
+We prioritize features based on:
 
-**Goal**: Extend ccm to manage Model Context Protocol servers alongside providers.
+1. **User Impact**: How many users benefit?
+2. **Differentiation**: What makes ccm unique?
+3. **Effort**: Implementation complexity
+4. **Dependencies**: What's needed first?
+5. **Community Demand**: What are users asking for?
 
-**Implementation**:
-- Profiles can include MCP server configurations
-- ccm writes to `.mcp.json` in addition to `settings.json`
-- Toggle MCP servers per profile
+### High Priority (Next 6 Months)
+1. ✅ Profile templates
+2. ✅ Import/export
+3. ✅ Connection testing
+4. ✅ Tab completions
+5. ✅ Configuration file
+6. ✅ MCP server management
 
-**Profile format**:
-```toml
-[profile]
-name = "full-stack"
+### Medium Priority (6-12 Months)
+1. VS Code extension
+2. Git hooks integration
+3. Usage analytics
+4. Team profile sharing
+5. Secrets management integration
+6. CI/CD templates
 
-[mcp.servers.github]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-github"]
-env = { GITHUB_TOKEN = "keychain:ccm/github" }
-
-[mcp.servers.postgres]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-postgres"]
-env = { DATABASE_URL = "env:DATABASE_URL" }
-```
-
-#### Profile Registry
-
-**Goal**: Discover and share community profiles.
-
-**Implementation**:
-- Central registry (like npm, crates.io) for profile templates
-- `ccm search openrouter` finds community profiles
-- `ccm install @community/openrouter-optimized` installs template
-- Verification badges for trusted publishers
-
-**User Experience**:
-```bash
-$ ccm search local
-  @ccm/ollama-default      Official Ollama preset
-  @community/lmstudio      LMStudio integration (★ 234)
-  @company/secure-local    Air-gapped deployment template
-
-$ ccm install @ccm/ollama-default
-```
-
-#### VS Code Extension
-
-**Goal**: Visual profile management without leaving the editor.
-
-**Implementation**:
-- Status bar showing current profile
-- Command palette: "ccm: Switch Profile"
-- Sidebar panel listing profiles with quick-switch
-- Automatic `.ccmrc` detection and prompts
-
-#### Claude Desktop Support
-
-**Goal**: Manage Claude Desktop app configuration alongside CLI.
-
-**Implementation**:
-- Detect Claude Desktop installation
-- Write to appropriate config location
-- Unified profile switching for both CLI and Desktop
-
-#### Cost Tracking
-
-**Goal**: Visibility into API costs per profile.
-
-**Implementation**:
-- Track token usage when possible (via response headers)
-- Estimate costs based on model pricing
-- `ccm stats` shows usage breakdown
-- Optional warnings when approaching budgets
+### Low Priority (12+ Months)
+1. TUI interface
+2. Policy engine
+3. SSO integration
+4. Multi-tool management
+5. Configuration as code
 
 ---
 
-## Future Vision (2026+)
+## 📊 Success Metrics by Phase
 
-### Smart Routing
+### Phase 2 (Polish)
+- **Templates**: 5+ built-in templates
+- **User satisfaction**: 90%+ positive feedback
+- **Adoption**: 1K+ downloads
 
-**Concept**: Automatically select the best model for each task.
+### Phase 3 (Teams)
+- **Team adoption**: 10+ teams using bundles
+- **Integrations**: 3+ secrets managers
+- **Adoption**: 5K+ downloads
 
-**How it might work**:
-- Analyze task complexity from prompt
-- Route simple tasks to fast/cheap models (Haiku)
-- Route complex tasks to powerful models (Opus)
-- Learn from user corrections
+### Phase 4 (Ecosystem)
+- **Extensions**: VS Code + 1 other IDE
+- **CI/CD**: 3+ platform templates
+- **Adoption**: 10K+ downloads
 
-**Profile format**:
-```toml
-[routing]
-strategy = "smart"
-fast_model = "claude-haiku-4"
-default_model = "claude-sonnet-4"  
-complex_model = "claude-opus-4"
-complexity_threshold = 0.7
-```
+### Phase 5 (Enterprise)
+- **Enterprise deployments**: 5+
+- **Compliance**: SOC2-ready audit logging
+- **Adoption**: 25K+ downloads
 
-### Provider Health Monitoring
-
-**Concept**: Automatic failover when primary provider has issues.
-
-**How it might work**:
-- Background health checks on active provider
-- Define fallback chain in profile
-- Automatic switch with notification
-- Manual override always available
-
-**Profile format**:
-```toml
-[failover]
-enabled = true
-fallback_profiles = ["openrouter-backup", "local-ollama"]
-health_check_interval = "5m"
-```
-
-### Usage Analytics Dashboard
-
-**Concept**: Web dashboard for teams to understand AI usage patterns.
-
-**How it might work**:
-- Optional telemetry (explicit opt-in)
-- Team aggregation (no individual tracking)
-- Insights: popular profiles, cost trends, failure rates
-- Self-hostable for enterprises
-
-### Multi-Tool Support
-
-**Concept**: Extend beyond Claude Code to other AI coding tools.
-
-**Potential targets**:
-- Cursor
-- Windsurf
-- Cline
-- Aider
-- Continue.dev
-
-**Implementation approach**:
-- Plugin architecture for tool-specific configuration writers
-- Unified profile format across tools
-- Single `ccm use` switches all configured tools
-
-### Plugin System
-
-**Concept**: Allow community extensions for custom providers and features.
-
-**How it might work**:
-- Plugins as separate binaries following ccm protocol
-- Discovery via plugin registry
-- Examples: custom auth flows, private registries, enterprise integrations
+### Phase 6 (Innovation)
+- **AI features**: 3+ AI-assisted capabilities
+- **Multi-tool**: 3+ supported tools
+- **Adoption**: 50K+ downloads
 
 ---
 
-## How to Extract Post-MVP Roadmap
+## 🤝 Community Involvement
 
-For planning purposes, here's a structured view of post-MVP work:
+We're building ccm in the open! Here's how you can help:
 
-### Post-MVP Phase 1: Polish (4-6 weeks)
-- [ ] Profile templates/presets for common providers
-- [ ] `ccm test` connection validation
-- [ ] Profile inheritance (extends)
-- [ ] Shell prompt integration
-- [ ] Enhanced error messages
+### Immediate Needs
+- 🐛 **Bug reports**: Find and report issues
+- 📖 **Documentation**: Improve guides and examples
+- 🧪 **Testing**: Test on different platforms and configurations
+- 💡 **Ideas**: Suggest features and improvements
 
-### Post-MVP Phase 2: Teams (6-8 weeks)
-- [ ] Profile export/import
-- [ ] Organization profile templates
-- [ ] Audit logging
-- [ ] Environment variable expansion
-- [ ] CI/CD integrations (GitHub Actions, GitLab)
+### Ongoing Needs
+- 🔧 **Code contributions**: Implement features and fixes
+- 📦 **Packaging**: Help with distribution (Homebrew, AUR, etc.)
+- 🎨 **Design**: UX improvements for CLI and extensions
+- 📝 **Content**: Write tutorials and guides
 
-### Post-MVP Phase 3: Ecosystem (3-4 months)
-- [ ] MCP server configuration
-- [ ] Profile registry (community sharing)
-- [ ] VS Code extension
-- [ ] Claude Desktop support
-- [ ] Cost tracking
-
-### Post-MVP Phase 4: Advanced (6+ months)
-- [ ] Smart model routing
-- [ ] Provider health monitoring
-- [ ] Usage analytics
-- [ ] Multi-tool support
-- [ ] Plugin system
+### How to Contribute
+1. Check [Issues](https://github.com/username/ccm/issues) for open tasks
+2. Read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines
+3. Join [Discussions](https://github.com/username/ccm/discussions)
+4. Submit PRs with your improvements
 
 ---
 
-## Contributing to the Roadmap
+## 🔄 Roadmap Updates
 
-We welcome community input on prioritization. Open an issue or discussion to:
+This roadmap is a living document. We update it:
+- **Monthly**: Based on progress and feedback
+- **Quarterly**: Based on community priorities
+- **After major releases**: Based on learnings
 
-1. **Vote on features**: React with 👍 on roadmap issues
-2. **Propose new features**: Open a feature request with use case
-3. **Contribute implementations**: PRs welcome for roadmap items
-4. **Share use cases**: Help us understand real-world needs
-
----
-
-## Versioning Philosophy
-
-- **Major versions** (2.0, 3.0): Breaking changes, major new capabilities
-- **Minor versions** (1.1, 1.2): New features, backward compatible
-- **Patch versions** (1.0.1): Bug fixes, documentation
-
-We commit to:
-- No breaking changes in minor versions
-- Migration guides for major versions
-- LTS support for v1.x even after v2.0 release
+### How to Influence the Roadmap
+1. 👍 Upvote features in [Discussions](https://github.com/username/ccm/discussions)
+2. 💬 Comment on roadmap issues
+3. 📊 Participate in surveys
+4. 🗳️ Vote on feature polls
 
 ---
 
-*Roadmap Version: 1.0*  
-*Last Updated: January 30, 2026*  
-*Next Review: March 2026*
+## 📅 Release Schedule
+
+### Version Strategy
+- **v0.x**: MVP and stabilization (current)
+- **v1.0**: Production-ready with core features
+- **v1.x**: Quality of life improvements
+- **v2.0**: Team and collaboration features
+- **v3.0**: Enterprise features
+
+### Release Cadence
+- **Minor versions** (0.x): Every 2-3 weeks
+- **Patch versions** (0.0.x): As needed for bugs
+- **Major versions** (x.0): Every 6-12 months
+
+---
+
+## 🎓 Learning from Others
+
+We're inspired by and learning from:
+
+- **fnm**: Fast Node Manager - speed and simplicity
+- **asdf**: Multiple runtime version manager - extensibility
+- **direnv**: Directory-based environment - auto-switching
+- **1Password CLI**: Secrets management - security patterns
+- **Terraform**: Configuration as code - declarative approach
+
+---
+
+## 🚀 Long-term Vision (2-3 Years)
+
+### The Future of ccm
+
+**Vision**: ccm becomes the **standard** for AI development tool configuration
+
+1. **Universal Configuration**
+   - Works with any AI coding tool
+   - Supports any LLM provider
+   - Runs anywhere (local, cloud, enterprise)
+
+2. **Best-in-Class DX**
+   - 30-second setup to first profile
+   - Rich IDE integrations
+   - Excellent documentation
+   - Thriving community
+
+3. **Enterprise Ready**
+   - SOC2 compliance support
+   - Comprehensive audit logging
+   - Policy enforcement
+   - SSO integration
+
+4. **Innovation Leader**
+   - AI-assisted configuration
+   - Intelligent optimization
+   - Cutting-edge features
+   - Open source ethos
+
+### Success Looks Like
+
+- ✅ 50K+ active users
+- ✅ 500+ contributors
+- ✅ 5K+ stars on GitHub
+- ✅ 50+ enterprise deployments
+- ✅ Standard tool for AI developers
+- ✅ Recommended by Claude Code team
+
+---
+
+## 💬 Feedback
+
+We want to hear from you!
+
+- **What features excite you?**
+- **What's missing from this roadmap?**
+- **What should we prioritize?**
+- **What problems can we solve for you?**
+
+Share your thoughts:
+- [GitHub Discussions](https://github.com/username/ccm/discussions)
+- [Discord Community](https://discord.gg/ccm) *(coming soon)*
+- [Twitter @ccm_cli](https://twitter.com/ccm_cli) *(coming soon)*
+
+---
+
+## 📝 Changelog
+
+### Roadmap Version History
+
+- **v1.0** (Current) - Initial comprehensive roadmap
+- Future updates will be tracked here
+
+---
+
+<div align="center">
+
+**Building the future of AI tool configuration, together** 🚀
+
+[Back to README](./README.md) • [MVP Roadmap](./MVP_ROADMAP.md) • [Contributing](./CONTRIBUTING.md)
+
+---
+
+*Last Updated: January 2026*  
+*Next Review: February 2026*
+
+</div>

@@ -1,0 +1,29 @@
+# Configuration for rustfmt, the Rust code formatter.
+# For a full list of options, see: https://rust-lang.github.io/rustfmt/
+
+# Use the formatting rules for the 2024 edition.
+# This requires `unstable_features = true`.
+edition = "2024"
+unstable_features = true
+
+# Use the latest stable formatting style.
+style_edition = "2015"
+
+# Set the maximum line length. 100 is a common modern default.
+max_width = 100
+
+# Group and reorder `use` statements for consistency.
+# The order is: `std`, external crates, then project-level crates (`crate`, `super`, `self`).
+reorder_imports = true
+group_imports = "StdExternalCrate"
+imports_granularity = "Crate"
+
+# Format code snippets within documentation comments.
+format_code_in_doc_comments = true
+
+# Wrap comments to the max_width.
+wrap_comments = true
+
+# Use heuristics to fit statements on one line if they are just slightly
+# over the `max_width`.
+use_small_heuristics = "Max"
