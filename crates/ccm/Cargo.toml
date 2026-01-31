@@ -1,0 +1,33 @@
+[package]
+name = "ccm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+description = "Claude Code Manager - fnm-style configuration management for Claude Code CLI"
+
+[[bin]]
+name = "ccm"
+path = "src/main.rs"
+
+[dependencies]
+ccm-core = { path = "../ccm-core" }
+clap.workspace = true
+dialoguer.workspace = true
+console.workspace = true
+indicatif.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+anyhow.workspace = true
+color-eyre.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+dirs.workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+predicates.workspace = true
+assert_fs.workspace = true
+tempfile.workspace = true
